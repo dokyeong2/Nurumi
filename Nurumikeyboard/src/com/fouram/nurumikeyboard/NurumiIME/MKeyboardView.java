@@ -5,11 +5,13 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
+import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import android.util.Log;
@@ -118,7 +120,6 @@ public class MKeyboardView extends View {
 	
 	/// variables in MKeyboardView
 	private Paint pnt;
-	private String command = "";
 	
 	private int[] motion;
 	private boolean[] circleAvailable;	
@@ -340,49 +341,8 @@ public class MKeyboardView extends View {
 					int touchCount = e.getPointerCount();
 					if(touchCount>5)
 						touchCount = 5;
+					motionCheck();					
 					
-					for(int i=0; i<5; i++)
-					{
-						if(motion[i] != -1)
-						{
-							switch(motion[i])
-							{
-								case DIRECTION_DOT :
-								{
-									Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOT");
-									command += "circleIndex : " + (i+1) + "| Dir) DOT\n";
-									break;
-								}
-								case DIRECTION_UP :
-								{
-									Log.d("UP", "circleIndex : " + (i+1) + "| Dir) UP");
-									command += "circleIndex : " + (i+1) + "| Dir) UP\n";
-									break;
-								}
-								case DIRECTION_DOWN :
-								{
-									Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOWN");
-									command += "circleIndex : " + (i+1) + "| Dir) DOWN\n";
-									break;
-								}
-								case DIRECTION_LEFT :
-								{
-									Log.d("UP", "circleIndex : " + (i+1) + "| Dir) LEFT");
-									command += "circleIndex : " + (i+1) + "| Dir) LEFT\n";
-									break;
-								}
-								case DIRECTION_RIGHT :
-								{
-									Log.d("UP", "circleIndex : " + (i+1) + "| Dir) RIGHT");
-									command += "circleIndex : " + (i+1) + "| Dir) RIGHT\n";
-								}
-							}//switch end
-						}//motion check if end
-					}//motion check for end
-					Log.d("Motion End", "------------------------------");
-					if(!command.equals(""))
-						Toast.makeText(ctx, command, android.widget.Toast.LENGTH_SHORT).show();
-					command = "";
 					/* initialization for next motion */
 					oldPtArr.clear();
 					ptArr.clear();
@@ -402,7 +362,57 @@ public class MKeyboardView extends View {
 			}
 		}
 	} // onTouchEvent fin
-		
+	
+	public void motionCheck()
+	{
+		String command = "";
+		for(int i=0; i<5; i++)
+		{
+			if(motion[i] != -1)
+			{
+				switch(motion[i])
+				{
+					case DIRECTION_DOT :
+					{
+						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOT");
+						command += "circleIndex : " + (i+1) + "| Dir) DOT\n";
+						break;
+					}
+					case DIRECTION_UP :
+					{
+						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) UP");
+						command += "circleIndex : " + (i+1) + "| Dir) UP\n";
+						break;
+					}
+					case DIRECTION_DOWN :
+					{
+						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOWN");
+						command += "circleIndex : " + (i+1) + "| Dir) DOWN\n";
+						break;
+					}
+					case DIRECTION_LEFT :
+					{
+						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) LEFT");
+						command += "circleIndex : " + (i+1) + "| Dir) LEFT\n";
+						break;
+					}
+					case DIRECTION_RIGHT :
+					{
+						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) RIGHT");
+						command += "circleIndex : " + (i+1) + "| Dir) RIGHT\n";
+					}
+				}//switch end
+			}//motion check if end
+		}//motion check for end
+		Log.d("Motion End", "------------------------------");
+		if(!command.equals(""))
+		{
+			Toast.makeText(ctx, command, android.widget.Toast.LENGTH_SHORT).show();
+			/* key event will be here. */
+		}
+		command = "";
+	}
+	
 	public int checkTouchedCircle(int x, int y)
 	{		
 		int index=0;

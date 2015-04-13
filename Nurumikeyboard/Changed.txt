@@ -1,2 +1,3 @@
-Doxygen format comments added.
-Merged Gesture recognition with MKeyboardView class.
+Changed Keyboard mode to full-screen mode to do not resize all layouts.
+Make motion check part function.
+Make keyboard view reset when user hide input method.

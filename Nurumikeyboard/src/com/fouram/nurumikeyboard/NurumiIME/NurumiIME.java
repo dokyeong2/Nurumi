@@ -1,14 +1,15 @@
 package com.fouram.nurumikeyboard.NurumiIME;
 
-
-import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
+import android.inputmethodservice.InputMethodService;
+import android.view.KeyEvent;
 import android.view.View;
-//import android.util.Log;
+import android.view.inputmethod.EditorInfo;
 //import android.view.inputmethod.InputMethodManager;
 //import android.view.KeyEvent;
 //import android.view.inputmethod.InputConnection;
 //import android.widget.EditText;
+//import android.util.Log;
 
 /////////////////////////////////////////////
 /// @class NurumiIME
@@ -39,9 +40,14 @@ import android.view.View;
 ///  - Input method service class.\n
 ///  - This class makes user to replace keyboard.\n
 /////////////////////////////////////////////
-public class NurumiIME extends InputMethodService implements
-		OnKeyboardActionListener {
+public class NurumiIME extends InputMethodService implements OnKeyboardActionListener {
 	
+	@Override
+	public void onFinishInputView(boolean finishingInput) {
+		// TODO Auto-generated method stub
+		super.onFinishInputView(finishingInput);
+	}
+
 	private View mKeyboardView;
 		
 	/////////////////////////////////////////////
@@ -68,20 +74,65 @@ public class NurumiIME extends InputMethodService implements
 		return true;
 	}
 	
+	
+
+	/////////////////////////////////////////////
+	/// @fn 
+	/// @brief (Override method) Function information
+	/// @remark
+	/// - Description
+	///	Reset keyboard view when the input method window has been hidden from the user.
+	/// @see android.inputmethodservice.InputMethodService#onWindowHidden()
+	/////////////////////////////////////////////
+	@Override
+	public void onWindowHidden() {
+		super.onWindowHidden();
+		int layoutId = R.layout.mkeyboardlayout;
+		mKeyboardView = (View)getLayoutInflater().inflate(layoutId, null);
+		setInputView(mKeyboardView);
+	}
+	
+	/* From here for full-screen mode */
+	@Override
+    public void onUpdateExtractingVisibility(EditorInfo ei) {
+        // TODO Auto-generated method stub
+        setExtractViewShown(true);
+    }
+	
+	@Override
+    public boolean onEvaluateFullscreenMode() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+	
+	@Override
+    public boolean isFullscreenMode() {
+        // TODO Auto-generated method stub
+        return true;
+    }
+	
+	@Override
+    public void setExtractViewShown(boolean shown) {
+        // TODO Auto-generated method stub
+        super.setExtractViewShown(true);
+    }
+
+	
+	/* key listeners */
 	@Override
 	public void onPress(int primaryCode) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onRelease(int primaryCode) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
-	public void onKey(int primaryCode, int[] keyCodes) {       
+	public void onKey(int primaryCode, int[] keyCodes) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -89,29 +140,30 @@ public class NurumiIME extends InputMethodService implements
 	@Override
 	public void onText(CharSequence text) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void swipeLeft() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void swipeRight() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void swipeDown() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void swipeUp() {
 		// TODO Auto-generated method stub
+		
 	}
 }
