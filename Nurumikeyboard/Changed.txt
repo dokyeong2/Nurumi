@@ -1,3 +1,5 @@
-changed all '5' limits to 'numFingers'.
-changed circle size from value to variables. (outer/innerCircleSize)
-Added case of MotionEvent.ACTION_CANCLE in onTouchEvent function.
+Gesture listening function implemented.
+ - OnMKeyboardGestureListener interface added
+ - connected keyboard view and IME service
+ - Changed constant circle size value to variables.
+ - Corrected checkTouchedCircle x range(180 -> OUTER_CIRCLE_SIZE)

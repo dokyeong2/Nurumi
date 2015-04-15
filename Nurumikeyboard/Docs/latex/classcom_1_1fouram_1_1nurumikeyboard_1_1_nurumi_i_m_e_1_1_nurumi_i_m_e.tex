@@ -7,7 +7,7 @@ Inheritance diagram for com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=234pt]{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e__inherit__graph}
+\includegraphics[width=350pt]{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e__inherit__graph}
 \end{center}
 \end{figure}
 
@@ -38,15 +38,25 @@ boolean \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nur
 boolean \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a7b278c1ebec576db4897dccc7b6b34da}{is\+Fullscreen\+Mode} ()
 \item 
 void \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ab2bcb5ce607676ca73f5a64b6b087973}{set\+Extract\+View\+Shown} (boolean shown)
+\item 
+void \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a539ed018248c5459a89e102ea4c8d5c5}{on\+Finish\+Gesture} (int\mbox{[}$\,$\mbox{]} \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion})
 \end{DoxyCompactItemize}
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
+\item 
+final int \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a9b39dd4573a5446f50b56ae0f0beba4d}{F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S} = 5
+\item 
+final int \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_afcdaac68a2da0f716da9b2ea582ea2ad}{T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S} = 10
+\item 
+int \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}{num\+Fingers}
 \item 
 View \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entire\+View}
 \item 
 View\+Group \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}{vg}
 \item 
 \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view}{M\+Keyboard\+View} \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{m\+Keyboard\+View}
+\item 
+int\mbox{[}$\,$\mbox{]} \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion}
 \end{DoxyCompactItemize}
 
 
@@ -98,14 +108,13 @@ Definition at line 41 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a7b278c1ebec576db4897dccc7b6b34da}
 
 
-Definition at line 107 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 111 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-107                                       \{
-108         \textcolor{comment}{// TODO Auto-generated method stub}
-109         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
-110     \}
+111                                       \{
+112         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+113     \}
 \end{DoxyCode}
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a2cc9e540f1ef205df73a02b38842f2cf}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Create\+Input\+View@{on\+Create\+Input\+View}}
 \index{on\+Create\+Input\+View@{on\+Create\+Input\+View}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
@@ -116,18 +125,35 @@ Definition at line 107 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a2cc9e540f1ef205df73a02b38842f2cf}
 
 
-Definition at line 64 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 67 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-64                                     \{
-65         \textcolor{keywordtype}{int} layoutId = R.layout.mkeyboardlayout;
-66         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView} = (View)getLayoutInflater().inflate(layoutId, null);
-67         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}{vg} = (ViewGroup) \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView};
-68         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{mKeyboardView} = (MKeyboardView) \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}{vg}.findViewById(R.id.MKeyboardView);
-69         \textcolor{keywordflow}{return} \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView};
-70     \}
+67                                     \{
+68         \textcolor{keywordtype}{int} layoutId = R.layout.mkeyboardlayout;
+69         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView} = (View)getLayoutInflater().inflate(layoutId, null);
+70         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}{vg} = (ViewGroup) \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView};
+71         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{mKeyboardView} = (MKeyboardView) \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}{vg}.findViewById(R.id.MKeyboardView);
+72         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{mKeyboardView}.\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view_a879697fa9b15b251c012e1a6e688acd7}{setIme}(\textcolor{keyword}{this});
+73         
+74         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}{numFingers} = \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a9b39dd4573a5446f50b56ae0f0beba4d}{FIVE\_FINGERS};
+75         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion} = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}{numFingers}];
+76         
+77         \textcolor{keywordflow}{return} \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}{entireView};
+78     \}
 \end{DoxyCode}
+
+
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a2cc9e540f1ef205df73a02b38842f2cf_cgraph}
+\end{center}
+\end{figure}
+
+
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8d8939dd9ba019a8ba3536f5529e105e}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Evaluate\+Fullscreen\+Mode@{on\+Evaluate\+Fullscreen\+Mode}}
 \index{on\+Evaluate\+Fullscreen\+Mode@{on\+Evaluate\+Fullscreen\+Mode}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
 \subsubsection[{on\+Evaluate\+Fullscreen\+Mode}]{\setlength{\rightskip}{0pt plus 5cm}boolean com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+on\+Evaluate\+Fullscreen\+Mode (
@@ -137,15 +163,50 @@ Definition at line 64 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8d8939dd9ba019a8ba3536f5529e105e}
 
 
-Definition at line 101 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 106 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-101                                               \{
-102         \textcolor{comment}{// TODO Auto-generated method stub}
-103         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
-104     \}
+106                                               \{
+107         \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+108     \}
 \end{DoxyCode}
+\hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a539ed018248c5459a89e102ea4c8d5c5}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Finish\+Gesture@{on\+Finish\+Gesture}}
+\index{on\+Finish\+Gesture@{on\+Finish\+Gesture}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
+\subsubsection[{on\+Finish\+Gesture}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+on\+Finish\+Gesture (
+\begin{DoxyParamCaption}
+\item[{int\mbox{[}$\,$\mbox{]}}]{motion}
+\end{DoxyParamCaption}
+)}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a539ed018248c5459a89e102ea4c8d5c5}
+
+
+Definition at line 130 of file Nurumi\+I\+M\+E.\+java.
+
+
+\begin{DoxyCode}
+130                                               \{
+131         \textcolor{comment}{//Log.d("Gesture listener", "Listener executed!");}
+132         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i = 0; i<\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}{numFingers}; i++)
+133             this.\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion}[i] = \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion}[i]; \textcolor{comment}{// get gesture input}
+134         InputConnection ic = getCurrentInputConnection();
+135         \textcolor{keywordflow}{if}(\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{motion}[0] == 0)
+136             ic.sendKeyEvent(\textcolor{keyword}{new} KeyEvent(KeyEvent.ACTION\_DOWN, KeyEvent.KEYCODE\_0));
+137         \textcolor{keywordflow}{else}
+138             ic.commitText(String.valueOf(\textcolor{stringliteral}{'¤¡'}),1);
+139     \}
+\end{DoxyCode}
+
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a539ed018248c5459a89e102ea4c8d5c5_icgraph}
+\end{center}
+\end{figure}
+
+
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a83c202c960e717ed80dd20c47e760a6c}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Finish\+Input\+View@{on\+Finish\+Input\+View}}
 \index{on\+Finish\+Input\+View@{on\+Finish\+Input\+View}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
 \subsubsection[{on\+Finish\+Input\+View}]{\setlength{\rightskip}{0pt plus 5cm}void com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+on\+Finish\+Input\+View (
@@ -155,14 +216,13 @@ Definition at line 101 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a83c202c960e717ed80dd20c47e760a6c}
 
 
-Definition at line 48 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 52 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-48                                                           \{
-49         \textcolor{comment}{// TODO Auto-generated method stub}
-50         super.onFinishInputView(finishingInput);
-51     \}
+52                                                           \{
+53         super.onFinishInputView(finishingInput);
+54     \}
 \end{DoxyCode}
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a187ecc78f108f4f394d63609503315bb}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Show\+Input\+Requested@{on\+Show\+Input\+Requested}}
 \index{on\+Show\+Input\+Requested@{on\+Show\+Input\+Requested}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
@@ -174,13 +234,13 @@ Definition at line 48 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a187ecc78f108f4f394d63609503315bb}
 
 
-Definition at line 73 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 81 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-73                                                                           \{
-74         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
-75     \}
+81                                                                           \{
+82         \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+83     \}
 \end{DoxyCode}
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a402ef1ca87efa5c183805ec36e249f5c}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!on\+Update\+Extracting\+Visibility@{on\+Update\+Extracting\+Visibility}}
 \index{on\+Update\+Extracting\+Visibility@{on\+Update\+Extracting\+Visibility}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
@@ -191,14 +251,13 @@ Definition at line 73 of file Nurumi\+I\+M\+E.\+java.
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a402ef1ca87efa5c183805ec36e249f5c}
 
 
-Definition at line 95 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 101 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-95                                                             \{
-96         \textcolor{comment}{// TODO Auto-generated method stub}
-97         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ab2bcb5ce607676ca73f5a64b6b087973}{setExtractViewShown}(\textcolor{keyword}{true});
-98     \}
+101                                                             \{
+102         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ab2bcb5ce607676ca73f5a64b6b087973}{setExtractViewShown}(\textcolor{keyword}{true});
+103     \}
 \end{DoxyCode}
 
 
@@ -221,14 +280,14 @@ Here is the call graph for this function\+:
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a5917567be1a7c4f177968eb9cb130992}
 
 
-Definition at line 86 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 94 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-86                                  \{
-87         super.onWindowHidden();
-88         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{mKeyboardView}.\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view_a536f8d1527df8c5013dc66d253ac5dae}{initialize}();
-89     \}
+94                                  \{
+95         super.onWindowHidden();
+96         \hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{mKeyboardView}.\hyperlink{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view_a536f8d1527df8c5013dc66d253ac5dae}{initialize}();
+97     \}   
 \end{DoxyCode}
 
 
@@ -251,14 +310,13 @@ Here is the call graph for this function\+:
 )}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ab2bcb5ce607676ca73f5a64b6b087973}
 
 
-Definition at line 113 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 116 of file Nurumi\+I\+M\+E.\+java.
 
 
 \begin{DoxyCode}
-113                                                    \{
-114         \textcolor{comment}{// TODO Auto-generated method stub}
-115         super.setExtractViewShown(\textcolor{keyword}{true});
-116     \}
+116                                                    \{
+117         super.setExtractViewShown(\textcolor{keyword}{true});
+118     \}
 \end{DoxyCode}
 
 
@@ -280,11 +338,39 @@ Here is the caller graph for this function\+:
 \subsubsection[{entire\+View}]{\setlength{\rightskip}{0pt plus 5cm}View com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+entire\+View\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_adf766bc5635fcf0dd670402d172e45ba}
 
 
-Definition at line 43 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 47 of file Nurumi\+I\+M\+E.\+java.
+
+\hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a9b39dd4573a5446f50b56ae0f0beba4d}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S@{F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S}}
+\index{F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S@{F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
+\subsubsection[{F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S}]{\setlength{\rightskip}{0pt plus 5cm}final int com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+F\+I\+V\+E\+\_\+\+F\+I\+N\+G\+E\+R\+S = 5\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a9b39dd4573a5446f50b56ae0f0beba4d}
+
+
+Definition at line 44 of file Nurumi\+I\+M\+E.\+java.
 
 \hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!m\+Keyboard\+View@{m\+Keyboard\+View}}
 \index{m\+Keyboard\+View@{m\+Keyboard\+View}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
 \subsubsection[{m\+Keyboard\+View}]{\setlength{\rightskip}{0pt plus 5cm}{\bf M\+Keyboard\+View} com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+m\+Keyboard\+View\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a357ffb1d95223caceb27332fecdf4d5c}
+
+
+Definition at line 49 of file Nurumi\+I\+M\+E.\+java.
+
+\hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!motion@{motion}}
+\index{motion@{motion}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
+\subsubsection[{motion}]{\setlength{\rightskip}{0pt plus 5cm}int \mbox{[}$\,$\mbox{]} com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+motion\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_ac73ce0e0f969277597c8907855393ea8}
+
+
+Definition at line 50 of file Nurumi\+I\+M\+E.\+java.
+
+\hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!num\+Fingers@{num\+Fingers}}
+\index{num\+Fingers@{num\+Fingers}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
+\subsubsection[{num\+Fingers}]{\setlength{\rightskip}{0pt plus 5cm}int com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+num\+Fingers\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_a8da73863a9fc74d17aa828c3d6d7bf6b}
+
+
+Definition at line 46 of file Nurumi\+I\+M\+E.\+java.
+
+\hypertarget{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_afcdaac68a2da0f716da9b2ea582ea2ad}{}\index{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}!T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S@{T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S}}
+\index{T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S@{T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S}!com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E@{com\+::fouram\+::nurumikeyboard\+::\+Nurumi\+I\+M\+E\+::\+Nurumi\+I\+M\+E}}
+\subsubsection[{T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S}]{\setlength{\rightskip}{0pt plus 5cm}final int com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+T\+E\+N\+\_\+\+F\+I\+N\+G\+E\+R\+S = 10\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_afcdaac68a2da0f716da9b2ea582ea2ad}
 
 
 Definition at line 45 of file Nurumi\+I\+M\+E.\+java.
@@ -294,7 +380,7 @@ Definition at line 45 of file Nurumi\+I\+M\+E.\+java.
 \subsubsection[{vg}]{\setlength{\rightskip}{0pt plus 5cm}View\+Group com.\+fouram.\+nurumikeyboard.\+Nurumi\+I\+M\+E.\+Nurumi\+I\+M\+E.\+vg\hspace{0.3cm}{\ttfamily [private]}}\label{classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e_addc58b240728adb839c40fa65e1b89bb}
 
 
-Definition at line 44 of file Nurumi\+I\+M\+E.\+java.
+Definition at line 48 of file Nurumi\+I\+M\+E.\+java.
 
 
 

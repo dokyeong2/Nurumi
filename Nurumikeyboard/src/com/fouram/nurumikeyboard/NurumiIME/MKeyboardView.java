@@ -28,7 +28,7 @@ import android.view.View;
 ///    | Date | 2015. 3. 26. |
 /// @section Description
 ///	- This file is for the view of motion keyboard.\n
-///	- This view will popup when user\n put cursor in textbox,\n
+///	- This view will popup when user\n put cursor in textbox.\n
 /////////////////////////////////////////////
 //
 ///////////////////////////////////////////
@@ -42,12 +42,13 @@ import android.view.View;
 ///    | Author | Park, Hyung Soon |
 ///    | Date | 2015. 3. 26. |
 /// @section Description
-///	- View of motion keyboard\n
+///	- View of motion keyboard.\n
 /////////////////////////////////////////////
 public class MKeyboardView extends View {
-	Context ctx;
+	private Context ctx; 
+	private NurumiIME ime;
 	
-	private static final int INVALID_CIRCLE		= -1;
+	private static final int INVALID_CIRCLE		= -1;	
 	private static final int INVALID_DIRECTION 	= -1;
 	private static final int DIRECTION_DOT		= 0;
 	private static final int DIRECTION_DOWN 	= 1;
@@ -70,7 +71,7 @@ public class MKeyboardView extends View {
 	///    | Author | Park, Hyung Soon |
 	///    | Date | 2015. 3. 26. |
 	/// @section Description
-	///	- This class will bind pointerID with circleNum
+	///	- This class will bind pointerID with circleNum.\n
 	/////////////////////////////////////////////
 	public class CircleLinkedWithPtId
 	{
@@ -88,7 +89,7 @@ public class MKeyboardView extends View {
 	///    | Author | Park, Hyung Soon |
 	///    | Date | 2015. 3. 26. |
 	/// @section Description
-	///  - This class will bind pointerID with pointerIndex
+	///  - This class will bind pointerID with pointerIndex.\n
 	/// 
 	/////////////////////////////////////////////
 	public class PtIdLinkedWithPtIndex
@@ -109,14 +110,17 @@ public class MKeyboardView extends View {
 	///    | Author | Park, Hyung Soon |
 	///    | Date | 2015. 3. 26. |
 	/// @section Description
-	///  - Comparator function for sort Circle number
-	/// 
+	///  - Comparator function for sort Circle number.\n
 	/////////////////////////////////////////////
 	new Comparator<PointF> () {
 		public int compare(PointF pt1, PointF pt2)
 		{
 			return (int) (pt1.x - pt2.x);
 		}
+		/*public int compareLHand(PointF pt1, PointF pt2)
+		{
+			return (int) (pt2.x - pt1.x);
+		}*/
 	};
 	
 	// variables in MKeyboardView
@@ -158,11 +162,9 @@ public class MKeyboardView extends View {
 	
 	/////////////////////////////////////////////
 	/// @fn initialize
-	/// @brief Function information : Initialize function
+	/// @brief Initialize function
 	/// @remark
-	/// - Description : 
-	/// Initialize all variables and lists 
-	///
+	/// - Description : Initialize all variables and lists.
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~
@@ -203,11 +205,25 @@ public class MKeyboardView extends View {
 	}
 
 	/////////////////////////////////////////////
+	/// @fn setIme
+	/// @brief Set parent IME
+	/// @remark
+	/// - Description : Set parent ime and link with IME variable MKeyboard View.\n
+	/// @param ime Parent IME
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
+	public void setIme(NurumiIME ime) {
+		this.ime = ime;
+	}
+	
+	/////////////////////////////////////////////
 	/// @fn 
-	/// @brief (Override method) Function information
+	/// @brief (Override method) Screen drawing function.
 	/// @remark
 	/// - Description
-	///	Draw 5 or 10 start point circles and touched point circles.
+	///	Draw 5 or 10 start point circles and touched point circles.\n
 	/// @see android.view.View#onDraw(android.graphics.Canvas)
 	/////////////////////////////////////////////
 	@Override
@@ -275,14 +291,13 @@ public class MKeyboardView extends View {
 	//@Override
 	/////////////////////////////////////////////
 	/// @fn onTouchEvent
-	/// @brief Function information : Touch event method
+	/// @brief Touch event method
 	/// @remark
 	/// - Description : This method will classify motion events.\n
 	///	Used MotionEvent.ACTION_MASK for recognize ACTION_POINTER events.\n
 	/// ACTION_DOWN, ACTION_POINTER_DOWN, ACTION_UP, ACTION_POINTER_UP, ACTION_MOVE, ACTION_CANCEL, and other event(default) will be recognzied.
 	/// @param e A motion event
 	/// @return Returns boolean value wether the touch event is valid or not.
-	///
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~
@@ -301,7 +316,7 @@ public class MKeyboardView extends View {
 				{
 					if( checkTouchedCircle((int)e.getX(), (int)e.getY()) == INVALID_CIRCLE )
 						return false;
-					for(int i=0; i<numFingers; i++)
+					for(int i=0; i<numFingers; i++) // initialize motion array
 						motion[i] = -1;
 					motionStartFlag = true;
 					Log.d("Motion Start", "------------------------------");
@@ -389,7 +404,7 @@ public class MKeyboardView extends View {
 					return true;
 				}
 				case MotionEvent.ACTION_CANCEL :
-				{
+				{ // cancel all motions and  initialize
 					oldPtArr.clear();
 					ptArr.clear();
 					clp.clear();
@@ -410,7 +425,7 @@ public class MKeyboardView extends View {
 	
 	/////////////////////////////////////////////
 	/// @fn motionCheck
-	/// @brief Function information : Motion checking method 
+	/// @brief Motion checking method 
 	/// @remark
 	/// - Description : In ACTION_UP motion event, this method will be called.\n 
 	/// Checks motion array and check motion of each pointer.\n
@@ -420,63 +435,24 @@ public class MKeyboardView extends View {
 	/////////////////////////////////////////////
 	public void motionCheck()
 	{
-		String command = "";
+		int checkEmpty=5;
 		for(int i=0; i<numFingers; i++)
-		{
-			if(motion[i] != -1)
-			{
-				switch(motion[i])
-				{
-					case DIRECTION_DOT :
-					{
-						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOT");
-						command += "circleIndex : " + (i+1) + "| Dir) DOT\n";
-						break;
-					}
-					case DIRECTION_UP :
-					{
-						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) UP");
-						command += "circleIndex : " + (i+1) + "| Dir) UP\n";
-						break;
-					}
-					case DIRECTION_DOWN :
-					{
-						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) DOWN");
-						command += "circleIndex : " + (i+1) + "| Dir) DOWN\n";
-						break;
-					}
-					case DIRECTION_LEFT :
-					{
-						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) LEFT");
-						command += "circleIndex : " + (i+1) + "| Dir) LEFT\n";
-						break;
-					}
-					case DIRECTION_RIGHT :
-					{
-						Log.d("UP", "circleIndex : " + (i+1) + "| Dir) RIGHT");
-						command += "circleIndex : " + (i+1) + "| Dir) RIGHT\n";
-					}
-				}//switch end
-			}//motion check if end
-		}//motion check for end
+			checkEmpty += motion[i];
 		Log.d("Motion End", "------------------------------");
-		if(!command.equals(""))
-		{
-			Toast.makeText(ctx, command, android.widget.Toast.LENGTH_SHORT).show();
-			/* key event will be here. */
-		}
-		command = "";
+		if(checkEmpty == 0)
+			return;
+		/* key event will be here. */
+		ime.onFinishGesture(motion);
 	}
 	
 	/////////////////////////////////////////////
 	/// @fn checkTouchedCircle
-	/// @brief Function information : Find touched circle
+	/// @brief Find touched circle
 	/// @remark
 	/// - Description : This method will check which circle is touched
 	/// @param x x grid of touched point
 	/// @param y y grid of touched point
 	/// @return Returns touched circle number. If any of circle is touched, return -1.
-	///
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~
@@ -487,7 +463,7 @@ public class MKeyboardView extends View {
 		for(PointF spt : startPtArr)
 		{
 			index++;
-			if( (Math.abs((int)spt.x - x) < 180) && (Math.abs((int)spt.y - y) < 140) )
+			if( (Math.abs((int)spt.x - x) < OUTER_CIRCLE_SIZE) && (Math.abs((int)spt.y - y) < OUTER_CIRCLE_SIZE) )
 				return index;
 		}
 		return -1;
@@ -496,13 +472,12 @@ public class MKeyboardView extends View {
 	
 	/////////////////////////////////////////////
 	/// @fn startMultiTouch
-	/// @brief Function information : Start multi touch recognition. 
+	/// @brief Start multi touch recognition. 
 	/// @remark
 	/// - Description : If 'numFingers' of fingers are touched, set 'start' flag true and start multi touch motion recognition.\n
 	/// Set 'numFingers' of starting points.
 	/// @param e A motion event
 	/// @return Returns the boolean value of motion event is valid or not.
-	///
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~
@@ -542,12 +517,11 @@ public class MKeyboardView extends View {
 	
 	/////////////////////////////////////////////
 	/// @fn checkDirection
-	/// @brief Function information : Check the direction of movement of pointers
+	/// @brief Check the direction of movement of pointers
 	/// @remark
 	/// - Description : Calculate the moved distances of pointers and save them in 'motion' array. 
 	/// @param pp : List of class which has Pointer ID and Pointer Index to link them.
 	/// @param pt : Grid of currently moving pointer.
-	///
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~

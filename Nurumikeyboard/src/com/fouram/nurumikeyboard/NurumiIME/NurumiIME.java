@@ -1,13 +1,13 @@
 package com.fouram.nurumikeyboard.NurumiIME;
 
 import android.inputmethodservice.InputMethodService;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.KeyEvent;
 //import android.widget.EditText;
-//import android.util.Log;
 
 /////////////////////////////////////////////
 /// @class NurumiIME
@@ -38,15 +38,18 @@ import android.view.KeyEvent;
 ///  - Input method service class.\n
 ///  - This class makes user to replace keyboard.\n
 /////////////////////////////////////////////
-public class NurumiIME extends InputMethodService {
+public class NurumiIME extends InputMethodService 
+					   implements OnMKeyboardGestureListener{
 	
+	private final int FIVE_FINGERS = 5;
+	private final int TEN_FINGERS = 10;
+	private int numFingers;
 	private View entireView;
 	private ViewGroup vg;
 	private MKeyboardView mKeyboardView;
-	
+	private int[] motion;
 	@Override
 	public void onFinishInputView(boolean finishingInput) {
-		// TODO Auto-generated method stub
 		super.onFinishInputView(finishingInput);
 	}
 	
@@ -66,6 +69,11 @@ public class NurumiIME extends InputMethodService {
 		entireView = (View)getLayoutInflater().inflate(layoutId, null);
 		vg = (ViewGroup) entireView;
 		mKeyboardView = (MKeyboardView) vg.findViewById(R.id.MKeyboardView);
+		mKeyboardView.setIme(this);
+		
+		numFingers = FIVE_FINGERS;
+		motion = new int[numFingers];
+		
 		return entireView;
 	}
 	
@@ -86,32 +94,47 @@ public class NurumiIME extends InputMethodService {
 	public void onWindowHidden() {
 		super.onWindowHidden();
 		mKeyboardView.initialize();
-	}
-	
-	
+	}	
 	
 	/* From here for full-screen mode */
 	@Override
     public void onUpdateExtractingVisibility(EditorInfo ei) {
-        // TODO Auto-generated method stub
         setExtractViewShown(true);
     }
 	
 	@Override
     public boolean onEvaluateFullscreenMode() {
-        // TODO Auto-generated method stub
         return false;
     }
 	
 	@Override
     public boolean isFullscreenMode() {
-        // TODO Auto-generated method stub
         return true;
     }
 	
 	@Override
     public void setExtractViewShown(boolean shown) {
-        // TODO Auto-generated method stub
         super.setExtractViewShown(true);
     }
+
+	
+	/* Custom gesture listener */
+	/////////////////////////////////////////////
+	/// @fn 
+	/// @brief (Override method) Gesture listener
+	/// @remark
+	/// - Description Get gesture input from MKeyboardView
+	/// @see com.fouram.nurumikeyboard.NurumiIME.OnMKeyboardGestureListener#onFinishGesture(java.lang.String)
+	/////////////////////////////////////////////
+	@Override
+	public void onFinishGesture(int[] motion) {
+		//Log.d("Gesture listener", "Listener executed!");
+		for(int i = 0; i<numFingers; i++)
+			this.motion[i] = motion[i]; // get gesture input
+		InputConnection ic = getCurrentInputConnection();
+		if(motion[0] == 0)
+			ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_0));
+		else
+			ic.commitText(String.valueOf('¤¡'),1);
+	}
 }
