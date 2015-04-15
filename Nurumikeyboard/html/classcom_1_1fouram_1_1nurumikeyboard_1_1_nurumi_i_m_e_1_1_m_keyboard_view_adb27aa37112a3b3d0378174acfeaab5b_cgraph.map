@@ -1,6 +1,0 @@
-<map id="com.fouram.nurumikeyboard.NurumiIME.MKeyboardView.onTouchEvent" name="com.fouram.nurumikeyboard.NurumiIME.MKeyboardView.onTouchEvent">
-<area shape="rect" id="node2" href="$classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#ab2ac559922d979d1c98d6e78c4860381" title="com.fouram.nurumikeyboard.\lNurumiIME.MKeyboardView.startMultiTouch" alt="" coords="323,5,600,47"/>
-<area shape="rect" id="node3" href="$classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a9bc686fee5cb8a59066702ccdf5b9561" title="com.fouram.nurumikeyboard.\lNurumiIME.MKeyboardView.checkTouched\lCircle" alt="" coords="648,86,920,142"/>
-<area shape="rect" id="node4" href="$classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#afd30ffde266a7542769ebb15f2f569f8" title="com.fouram.nurumikeyboard.\lNurumiIME.MKeyboardView.checkDirection" alt="" coords="324,123,599,164"/>
-<area shape="rect" id="node5" href="$classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a6af440ca9c6043f361e51ead2e95620a" title="com.fouram.nurumikeyboard.\lNurumiIME.MKeyboardView.performClick" alt="" coords="331,188,591,229"/>
-</map>

@@ -5,13 +5,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 
-import android.app.Instrumentation;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import android.util.Log;
@@ -57,7 +55,10 @@ public class MKeyboardView extends View {
 	private static final int DIRECTION_UP  		= 3;
 	private static final int DIRECTION_RIGHT	= 4;
 	private static final int SWIPE_MIN_DISTANCE = 140;
-	
+	private static final int FIVE_FINGERS 		= 5;
+	private static final int TEN_FINGERS 		= 10;
+	private static final int OUTER_CIRCLE_SIZE	= 140;
+	private static final int INNER_CIRCLE_SIZE	= 100;
 	/////////////////////////////////////////////
 	/// @class CircleLinkedWithPtId
 	///com.fouram.nurumikeyboard.NurumiIME \n
@@ -118,9 +119,12 @@ public class MKeyboardView extends View {
 		}
 	};
 	
-	/// variables in MKeyboardView
+	// variables in MKeyboardView
 	private Paint pnt;
 	
+	private int numFingers;
+	private int innerCircleSize;
+	private int outerCircleSize;
 	private int[] motion;
 	private boolean[] circleAvailable;	
 	
@@ -149,15 +153,33 @@ public class MKeyboardView extends View {
 	public MKeyboardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.ctx = context;
-		//Log.d("viewStart", "ctx attrs");
+		initialize();		
+	}
+	
+	/////////////////////////////////////////////
+	/// @fn initialize
+	/// @brief Function information : Initialize function
+	/// @remark
+	/// - Description : 
+	/// Initialize all variables and lists 
+	///
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
+	public void initialize()
+	{
 		pnt = new Paint();
+		numFingers = FIVE_FINGERS;
+		outerCircleSize = OUTER_CIRCLE_SIZE;
+		innerCircleSize = INNER_CIRCLE_SIZE;
 		
 		startFlag = false;
 		start = false;
 		motionStartFlag = false;
-		motion = new int[5];
-		circleAvailable = new boolean[5];
-		for(int i=0; i<5; i++)
+		motion = new int[numFingers];
+		circleAvailable = new boolean[numFingers];
+		for(int i=0; i<numFingers; i++)
 			circleAvailable[i] = true;
 		
 		plp = new LinkedList<PtIdLinkedWithPtIndex>();
@@ -185,7 +207,7 @@ public class MKeyboardView extends View {
 	/// @brief (Override method) Function information
 	/// @remark
 	/// - Description
-	///	Draw 5 start point circles and touched point circles.
+	///	Draw 5 or 10 start point circles and touched point circles.
 	/// @see android.view.View#onDraw(android.graphics.Canvas)
 	/////////////////////////////////////////////
 	@Override
@@ -205,10 +227,10 @@ public class MKeyboardView extends View {
 			pnt.setColor(Color.BLACK);
 			pnt.setStyle(Paint.Style.STROKE);
 			pnt.setStrokeWidth(1);
-			canvas.drawCircle(spt.x,spt.y, 140, pnt);
+			canvas.drawCircle(spt.x,spt.y, outerCircleSize, pnt);
 
 			pnt.setStyle(Paint.Style.FILL);
-			canvas.drawText(String.valueOf(index),spt.x,spt.y-114,pnt);
+			canvas.drawText(String.valueOf(index),spt.x,spt.y-((int)(outerCircleSize/0.8)),pnt);
 		}
 		
 		/* down event position */
@@ -218,10 +240,10 @@ public class MKeyboardView extends View {
 			{
 				int circleNum = checkTouchedCircle((int)pt.x, (int)pt.y);
 				pnt.setStyle(Paint.Style.STROKE);
-				canvas.drawCircle(pt.x,pt.y, 100, pnt);
+				canvas.drawCircle(pt.x,pt.y, innerCircleSize, pnt);
 
 				pnt.setStyle(Paint.Style.FILL);
-				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-114,pnt);
+				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-((int)(outerCircleSize/0.8)),pnt);
 			}
 		}
 		
@@ -237,13 +259,12 @@ public class MKeyboardView extends View {
 				int circleNum = clp.get(pointerId).circleNum;
 				
 				pnt.setStyle(Paint.Style.STROKE);
-				canvas.drawCircle(pt.x,pt.y, 100, pnt);
+				canvas.drawCircle(pt.x,pt.y, innerCircleSize, pnt);
 
 				pnt.setStyle(Paint.Style.FILL);
-				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-114,pnt);
+				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-((int)(outerCircleSize/0.8)),pnt);
 			}
-		}
-		
+		}		
 	} // onDraw fin
 	
 	@Override
@@ -252,6 +273,20 @@ public class MKeyboardView extends View {
 	}
 	
 	//@Override
+	/////////////////////////////////////////////
+	/// @fn onTouchEvent
+	/// @brief Function information : Touch event method
+	/// @remark
+	/// - Description : This method will classify motion events.\n
+	///	Used MotionEvent.ACTION_MASK for recognize ACTION_POINTER events.\n
+	/// ACTION_DOWN, ACTION_POINTER_DOWN, ACTION_UP, ACTION_POINTER_UP, ACTION_MOVE, ACTION_CANCEL, and other event(default) will be recognzied.
+	/// @param e A motion event
+	/// @return Returns boolean value wether the touch event is valid or not.
+	///
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
 	public boolean onTouchEvent (MotionEvent e)
 	{
 		int action = e.getAction() & MotionEvent.ACTION_MASK;
@@ -266,7 +301,7 @@ public class MKeyboardView extends View {
 				{
 					if( checkTouchedCircle((int)e.getX(), (int)e.getY()) == INVALID_CIRCLE )
 						return false;
-					for(int i=0; i<5; i++)
+					for(int i=0; i<numFingers; i++)
 						motion[i] = -1;
 					motionStartFlag = true;
 					Log.d("Motion Start", "------------------------------");
@@ -275,12 +310,11 @@ public class MKeyboardView extends View {
 				{
 					int touchCount = e.getPointerCount();
 					int circleNum = checkTouchedCircle((int)e.getX(touchCount-1), (int)e.getY(touchCount-1));
-					if(touchCount>5 || circleNum == -1 || !motionStartFlag || !circleAvailable[circleNum-1])
+					if(touchCount>numFingers || circleNum == -1 || !motionStartFlag || !circleAvailable[circleNum-1])
 					{
 						invalidate();
 						return true;
-					}
-												
+					}						
 					circleAvailable[circleNum-1] = false;
 					motion[circleNum-1] = DIRECTION_DOT;
 					
@@ -303,8 +337,8 @@ public class MKeyboardView extends View {
 					ptArr.clear();
 					plp.clear();
 					int touchCount = e.getPointerCount();
-					if(touchCount>5)
-						touchCount = 5;
+					if(touchCount>numFingers)
+						touchCount = numFingers;
 					for (int i=0; i<touchCount; i++)
 					{
 						PointF ptf = new PointF();
@@ -327,8 +361,8 @@ public class MKeyboardView extends View {
 					motionStartFlag = false;
 					
 					int touchCount = e.getPointerCount();
-					if(touchCount>5)
-						touchCount = 5;
+					if(touchCount>numFingers)
+						touchCount = numFingers;
 					return true;
 				}
 				case MotionEvent.ACTION_UP :
@@ -339,8 +373,8 @@ public class MKeyboardView extends View {
 						return true;
 					}
 					int touchCount = e.getPointerCount();
-					if(touchCount>5)
-						touchCount = 5;
+					if(touchCount>numFingers)
+						touchCount = numFingers;
 					motionCheck();					
 					
 					/* initialization for next motion */
@@ -348,11 +382,22 @@ public class MKeyboardView extends View {
 					ptArr.clear();
 					clp.clear();
 					plp.clear();
-					for(int i=0; i<5; i++)
+					for(int i=0; i<numFingers; i++)
 						circleAvailable[i] = true;
 					performClick();
 					invalidate();					
 					return true;
+				}
+				case MotionEvent.ACTION_CANCEL :
+				{
+					oldPtArr.clear();
+					ptArr.clear();
+					clp.clear();
+					plp.clear();
+					for(int i=0; i<numFingers; i++)
+						circleAvailable[i] = true;
+					invalidate();
+					return false;
 				}
 				default :
 				{
@@ -363,10 +408,20 @@ public class MKeyboardView extends View {
 		}
 	} // onTouchEvent fin
 	
+	/////////////////////////////////////////////
+	/// @fn motionCheck
+	/// @brief Function information : Motion checking method 
+	/// @remark
+	/// - Description : In ACTION_UP motion event, this method will be called.\n 
+	/// Checks motion array and check motion of each pointer.\n
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
 	public void motionCheck()
 	{
 		String command = "";
-		for(int i=0; i<5; i++)
+		for(int i=0; i<numFingers; i++)
 		{
 			if(motion[i] != -1)
 			{
@@ -413,6 +468,19 @@ public class MKeyboardView extends View {
 		command = "";
 	}
 	
+	/////////////////////////////////////////////
+	/// @fn checkTouchedCircle
+	/// @brief Function information : Find touched circle
+	/// @remark
+	/// - Description : This method will check which circle is touched
+	/// @param x x grid of touched point
+	/// @param y y grid of touched point
+	/// @return Returns touched circle number. If any of circle is touched, return -1.
+	///
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
 	public int checkTouchedCircle(int x, int y)
 	{		
 		int index=0;
@@ -425,13 +493,27 @@ public class MKeyboardView extends View {
 		return -1;
 	} // checkTouchedCircle fin
 	
+	
+	/////////////////////////////////////////////
+	/// @fn startMultiTouch
+	/// @brief Function information : Start multi touch recognition. 
+	/// @remark
+	/// - Description : If 'numFingers' of fingers are touched, set 'start' flag true and start multi touch motion recognition.\n
+	/// Set 'numFingers' of starting points.
+	/// @param e A motion event
+	/// @return Returns the boolean value of motion event is valid or not.
+	///
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
 	public boolean startMultiTouch(MotionEvent e)
 	{
 		startPtArr.clear();
 		if ( e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_MOVE )
 		{
 			int touchCount = e.getPointerCount();		
-			if(touchCount == 5)
+			if(touchCount == numFingers)
 			{
 				start = true;
 				Log.d("start" , "start : " + start);
@@ -458,10 +540,22 @@ public class MKeyboardView extends View {
 	} // startMultiTouch fin
 	
 	
+	/////////////////////////////////////////////
+	/// @fn checkDirection
+	/// @brief Function information : Check the direction of movement of pointers
+	/// @remark
+	/// - Description : Calculate the moved distances of pointers and save them in 'motion' array. 
+	/// @param pp : List of class which has Pointer ID and Pointer Index to link them.
+	/// @param pt : Grid of currently moving pointer.
+	///
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
 	public void checkDirection(PtIdLinkedWithPtIndex pp, PointF pt)
 	{
 		CircleLinkedWithPtId cp = new CircleLinkedWithPtId();
-		for(int i=0; i<5; i++)
+		for(int i=0; i<numFingers; i++)
 		{
 			if(clp.size() <= i)
 				return;
@@ -472,7 +566,7 @@ public class MKeyboardView extends View {
 		
 		PointF oldPt = new PointF();
 		int circleNum = -1;
-		for(int i=0; i<5; i++)
+		for(int i=0; i<numFingers; i++)
 		{
 			if(oldPtArr.size() <= i)
 				break;

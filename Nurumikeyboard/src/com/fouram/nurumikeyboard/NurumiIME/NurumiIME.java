@@ -1,13 +1,11 @@
 package com.fouram.nurumikeyboard.NurumiIME;
 
-import android.inputmethodservice.KeyboardView.OnKeyboardActionListener;
 import android.inputmethodservice.InputMethodService;
-import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-//import android.view.inputmethod.InputMethodManager;
-//import android.view.KeyEvent;
-//import android.view.inputmethod.InputConnection;
+import android.view.inputmethod.InputConnection;
+import android.view.KeyEvent;
 //import android.widget.EditText;
 //import android.util.Log;
 
@@ -40,16 +38,18 @@ import android.view.inputmethod.EditorInfo;
 ///  - Input method service class.\n
 ///  - This class makes user to replace keyboard.\n
 /////////////////////////////////////////////
-public class NurumiIME extends InputMethodService implements OnKeyboardActionListener {
+public class NurumiIME extends InputMethodService {
+	
+	private View entireView;
+	private ViewGroup vg;
+	private MKeyboardView mKeyboardView;
 	
 	@Override
 	public void onFinishInputView(boolean finishingInput) {
 		// TODO Auto-generated method stub
 		super.onFinishInputView(finishingInput);
 	}
-
-	private View mKeyboardView;
-		
+	
 	/////////////////////////////////////////////
 	/// @fn 
 	/// @brief (Override method) Function information
@@ -63,18 +63,16 @@ public class NurumiIME extends InputMethodService implements OnKeyboardActionLis
 	@Override
 	public View onCreateInputView() {
 		int layoutId = R.layout.mkeyboardlayout;
-		mKeyboardView = (View)getLayoutInflater().inflate(layoutId, null);
-		return mKeyboardView;
+		entireView = (View)getLayoutInflater().inflate(layoutId, null);
+		vg = (ViewGroup) entireView;
+		mKeyboardView = (MKeyboardView) vg.findViewById(R.id.MKeyboardView);
+		return entireView;
 	}
 	
 	@Override
-	public boolean onShowInputRequested (int flags, boolean configChange)
-	{
-		//Log.d("startView", "View started!");
+	public boolean onShowInputRequested (int flags, boolean configChange) {
 		return true;
 	}
-	
-	
 
 	/////////////////////////////////////////////
 	/// @fn 
@@ -87,10 +85,10 @@ public class NurumiIME extends InputMethodService implements OnKeyboardActionLis
 	@Override
 	public void onWindowHidden() {
 		super.onWindowHidden();
-		int layoutId = R.layout.mkeyboardlayout;
-		mKeyboardView = (View)getLayoutInflater().inflate(layoutId, null);
-		setInputView(mKeyboardView);
+		mKeyboardView.initialize();
 	}
+	
+	
 	
 	/* From here for full-screen mode */
 	@Override
@@ -116,54 +114,4 @@ public class NurumiIME extends InputMethodService implements OnKeyboardActionLis
         // TODO Auto-generated method stub
         super.setExtractViewShown(true);
     }
-
-	
-	/* key listeners */
-	@Override
-	public void onPress(int primaryCode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onRelease(int primaryCode) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onKey(int primaryCode, int[] keyCodes) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onText(CharSequence text) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void swipeLeft() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void swipeRight() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void swipeDown() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void swipeUp() {
-		// TODO Auto-generated method stub
-		
-	}
 }

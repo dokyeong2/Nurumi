@@ -1,3 +1,3 @@
-Changed Keyboard mode to full-screen mode to do not resize all layouts.
-Make motion check part function.
-Make keyboard view reset when user hide input method.
+changed all '5' limits to 'numFingers'.
+changed circle size from value to variables. (outer/innerCircleSize)
+Added case of MotionEvent.ACTION_CANCLE in onTouchEvent function.
