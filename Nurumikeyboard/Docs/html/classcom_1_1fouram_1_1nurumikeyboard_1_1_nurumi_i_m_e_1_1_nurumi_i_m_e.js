@@ -2,6 +2,7 @@ var classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e =
 [
     [ "isFullscreenMode", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a7b278c1ebec576db4897dccc7b6b34da", null ],
     [ "onCreateInputView", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a2cc9e540f1ef205df73a02b38842f2cf", null ],
+    [ "onDestroy", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#af22e736dc1e2d433a6fe456da6b476c2", null ],
     [ "onEvaluateFullscreenMode", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a8d8939dd9ba019a8ba3536f5529e105e", null ],
     [ "onFinishGesture", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a539ed018248c5459a89e102ea4c8d5c5", null ],
     [ "onFinishInputView", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a83c202c960e717ed80dd20c47e760a6c", null ],
@@ -14,6 +15,5 @@ var classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e =
     [ "mKeyboardView", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a357ffb1d95223caceb27332fecdf4d5c", null ],
     [ "motion", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#ac73ce0e0f969277597c8907855393ea8", null ],
     [ "numFingers", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a8da73863a9fc74d17aa828c3d6d7bf6b", null ],
-    [ "TEN_FINGERS", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#afcdaac68a2da0f716da9b2ea582ea2ad", null ],
     [ "vg", "classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#addc58b240728adb839c40fa65e1b89bb", null ]
 ];

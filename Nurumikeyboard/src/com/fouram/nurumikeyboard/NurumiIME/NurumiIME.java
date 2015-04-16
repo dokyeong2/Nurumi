@@ -1,7 +1,7 @@
 package com.fouram.nurumikeyboard.NurumiIME;
 
 import android.inputmethodservice.InputMethodService;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
@@ -42,7 +42,7 @@ public class NurumiIME extends InputMethodService
 					   implements OnMKeyboardGestureListener{
 	
 	private final int FIVE_FINGERS = 5;
-	private final int TEN_FINGERS = 10;
+	//private final int TEN_FINGERS = 10;
 	private int numFingers;
 	private View entireView;
 	private ViewGroup vg;
@@ -117,7 +117,13 @@ public class NurumiIME extends InputMethodService
         super.setExtractViewShown(true);
     }
 
-	
+	/* Destructor */
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		mKeyboardView.recycleBitmap();
+	}
+
 	/* Custom gesture listener */
 	/////////////////////////////////////////////
 	/// @fn 
@@ -134,6 +140,8 @@ public class NurumiIME extends InputMethodService
 		InputConnection ic = getCurrentInputConnection();
 		if(motion[0] == 0)
 			ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_0));
+		if(motion[4] == 0)
+			ic.sendKeyEvent(new KeyEvent(KeyEvent.ACTION_DOWN, KeyEvent.KEYCODE_DEL));
 		else
 			ic.commitText(String.valueOf('¤¡'),1);
 	}

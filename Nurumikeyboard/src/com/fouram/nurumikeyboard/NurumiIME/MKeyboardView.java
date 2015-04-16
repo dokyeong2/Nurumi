@@ -6,12 +6,14 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.MotionEvent;
-import android.widget.Toast;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.AttributeSet;
 import android.view.View;
@@ -48,18 +50,22 @@ public class MKeyboardView extends View {
 	private Context ctx; 
 	private NurumiIME ime;
 	
-	private static final int INVALID_CIRCLE		= -1;	
-	private static final int INVALID_DIRECTION 	= -1;
-	private static final int DIRECTION_DOT		= 0;
-	private static final int DIRECTION_DOWN 	= 1;
-	private static final int DIRECTION_LEFT 	= 2;
-	private static final int DIRECTION_UP  		= 3;
-	private static final int DIRECTION_RIGHT	= 4;
-	private static final int SWIPE_MIN_DISTANCE = 140;
-	private static final int FIVE_FINGERS 		= 5;
-	private static final int TEN_FINGERS 		= 10;
-	private static final int OUTER_CIRCLE_SIZE	= 140;
-	private static final int INNER_CIRCLE_SIZE	= 100;
+	public static final int INVALID_CIRCLE		= -1;	
+	public static final int DIRECTION_EMPTY 	= -1;
+	public static final int DIRECTION_DOT		= 0;
+	public static final int DIRECTION_DOWN 	= 1;
+	public static final int DIRECTION_LEFT 	= 2;
+	public static final int DIRECTION_UP  		= 3;
+	public static final int DIRECTION_RIGHT	= 4;
+	
+	public static final int FIVE_FINGERS 		= 5;
+	//public static final int TEN_FINGERS 		= 10;
+	
+	public static final int SWIPE_MIN_DISTANCE = 40; /// dp value
+	public static final int STD_CIRCLE_SIZE	= 47; /// dp value
+	public static final int INNER_CIRCLE_SIZE	= 33; /// dp value
+	public static final int FONT_SIZE = 21; // sp value
+	
 	/////////////////////////////////////////////
 	/// @class CircleLinkedWithPtId
 	///com.fouram.nurumikeyboard.NurumiIME \n
@@ -73,8 +79,7 @@ public class MKeyboardView extends View {
 	/// @section Description
 	///	- This class will bind pointerID with circleNum.\n
 	/////////////////////////////////////////////
-	public class CircleLinkedWithPtId
-	{
+	public class CircleLinkedWithPtId {
 		int pointerId;
 		int circleNum;		
 	}
@@ -92,13 +97,12 @@ public class MKeyboardView extends View {
 	///  - This class will bind pointerID with pointerIndex.\n
 	/// 
 	/////////////////////////////////////////////
-	public class PtIdLinkedWithPtIndex
-	{
+	public class PtIdLinkedWithPtIndex {
 		int pointerId;
 		int pointerIndex;	
 	}
 	
-	final Comparator<PointF> comparatorX = 
+	private final static Comparator<PointF> comparatorRHand =
 	/////////////////////////////////////////////
 	/// @class 1
 	///com.fouram.nurumikeyboard.NurumiIME \n
@@ -111,28 +115,48 @@ public class MKeyboardView extends View {
 	///    | Date | 2015. 3. 26. |
 	/// @section Description
 	///  - Comparator function for sort Circle number.\n
+	///  - For right handed user.\n
 	/////////////////////////////////////////////
 	new Comparator<PointF> () {
-		public int compare(PointF pt1, PointF pt2)
-		{
+		public int compare(PointF pt1, PointF pt2) {
 			return (int) (pt1.x - pt2.x);
 		}
-		/*public int compareLHand(PointF pt1, PointF pt2)
-		{
+	};
+	
+	@SuppressWarnings("unused")
+	private final static Comparator<PointF> comparatorLHand =
+	/////////////////////////////////////////////
+	/// @class 2
+	///com.fouram.nurumikeyboard.NurumiIME \n
+	///   ¤¤ MKeyboardView.java
+	/// @section Class information
+	///    |    Item    |    Contents    |
+	///    | :-------------: | -------------   |
+	///    | Company | 4:00 A.M. |    
+	///    | Author | Park, Hyung Soon |
+	///    | Date | 2015. 4. 12. |
+	/// @section Description
+	///  - Comparator function for sort Circle number.\n
+	///  - For left handed user.\n
+	/////////////////////////////////////////////
+	new Comparator<PointF> () {
+		public int compare(PointF pt1, PointF pt2) {
 			return (int) (pt2.x - pt1.x);
-		}*/
+		}
 	};
 	
 	// variables in MKeyboardView
 	private Paint pnt;
 	
-	private int numFingers;
 	private int innerCircleSize;
-	private int outerCircleSize;
+	private int standardCircleSize;
+	private int fontSize;
+	private int swipeThreshold;
+	private int numFingers;
+	
 	private int[] motion;
 	private boolean[] circleAvailable;	
-	
-	
+		
 	private LinkedList<PtIdLinkedWithPtIndex> plp;
 	private ArrayList<CircleLinkedWithPtId> clp;
 	private ArrayList<PointF> startPtArr;
@@ -142,6 +166,13 @@ public class MKeyboardView extends View {
 	private boolean motionStartFlag;
 	private boolean start;
 	private boolean startFlag;
+	
+	private Bitmap bitmap;
+	private Bitmap dotImg;
+	private Bitmap upImg;
+	private Bitmap downImg;
+	private Bitmap leftImg;
+	private Bitmap rightImg;
 	
 	/////////////////////////////////////////////
 	/// @fn 
@@ -157,7 +188,34 @@ public class MKeyboardView extends View {
 	public MKeyboardView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.ctx = context;
-		initialize();		
+		setDpValues();
+		initialize();
+		setBitmap();
+	}
+	
+	private void setDpValues() {
+		standardCircleSize = (int) dpToPx(STD_CIRCLE_SIZE, ctx.getApplicationContext());
+		innerCircleSize = (int) dpToPx(INNER_CIRCLE_SIZE, ctx.getApplicationContext());
+		swipeThreshold = (int) dpToPx(SWIPE_MIN_DISTANCE, ctx.getApplicationContext());
+		fontSize = (int) dpToPx(FONT_SIZE, ctx.getApplicationContext());
+	}
+	
+	/////////////////////////////////////////////
+	/// @fn convertDpToPixel
+	/// @brief Function information : Convers dp value to px value.
+	/// @remark
+	/// - Description : This method converts dp unit to equivalent pixels, depending on device density.
+	/// @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels.
+	/// @param context Context to get resources and device specific display metrics.
+	/// @return A float value to represent px equivalent to dp depending on device density.
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
+	public float dpToPx(float dp, Context context) {
+		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+		float px = dp * (metrics.densityDpi / 160f);
+		return px;
 	}
 	
 	/////////////////////////////////////////////
@@ -169,12 +227,9 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public void initialize()
-	{
+	protected void initialize()	{
 		pnt = new Paint();
 		numFingers = FIVE_FINGERS;
-		outerCircleSize = OUTER_CIRCLE_SIZE;
-		innerCircleSize = INNER_CIRCLE_SIZE;
 		
 		startFlag = false;
 		start = false;
@@ -203,7 +258,60 @@ public class MKeyboardView extends View {
 		super(context);
 		this.ctx = context;
 	}
-
+	
+	/////////////////////////////////////////////
+	/// @fn setBitmap
+	/// @brief Function information : Set bitmap images. 
+	/// @remark
+	/// - Description : Set bitmap images for directions.
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
+	private void setBitmap() {
+		BitmapDrawable drawable;
+			
+		drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.dot);
+		bitmap = drawable.getBitmap();
+		dotImg = Bitmap.createScaledBitmap(drawable.getBitmap(), innerCircleSize*2, innerCircleSize*2, true);
+				
+		drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.u_arrow);
+		bitmap = drawable.getBitmap();
+		upImg = Bitmap.createScaledBitmap(drawable.getBitmap(), innerCircleSize*2, innerCircleSize*2, true);
+				
+		drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.d_arrow);
+		bitmap = drawable.getBitmap();
+		downImg = Bitmap.createScaledBitmap(drawable.getBitmap(), innerCircleSize*2, innerCircleSize*2, true);
+				
+		drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.l_arrow);
+		bitmap = drawable.getBitmap();
+		leftImg = Bitmap.createScaledBitmap(drawable.getBitmap(), innerCircleSize*2, innerCircleSize*2, true);
+				
+		drawable = (BitmapDrawable) getResources().getDrawable(R.drawable.r_arrow);
+		bitmap = drawable.getBitmap();
+		rightImg = Bitmap.createScaledBitmap(drawable.getBitmap(), innerCircleSize*2, innerCircleSize*2, true);
+		
+		drawable.setCallback(null);
+	}
+	
+	/////////////////////////////////////////////
+	/// @fn recycleBitmap
+	/// @brief Function information : Free all Bitmap objects to evade memory leak.
+	/// @remark
+	/// - Description : To evade memory leak user have to free up Bitmap object. Android OS will not free up all Bitmaps.
+	///~~~~~~~~~~~~~{.java}
+	/// // core code
+	///~~~~~~~~~~~~~
+	/////////////////////////////////////////////
+	protected void recycleBitmap() {
+		bitmap.recycle();
+		dotImg.recycle();
+		upImg.recycle();
+		downImg.recycle();
+		leftImg.recycle();
+		rightImg.recycle();
+	}
+	
 	/////////////////////////////////////////////
 	/// @fn setIme
 	/// @brief Set parent IME
@@ -214,7 +322,7 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public void setIme(NurumiIME ime) {
+	protected void setIme(NurumiIME ime) {
 		this.ime = ime;
 	}
 	
@@ -231,44 +339,61 @@ public class MKeyboardView extends View {
 		super.onDraw(canvas);
 	    canvas.drawColor(Color.TRANSPARENT);
 	    
-	    pnt.setTextSize(64.0f);
+	    pnt.setTextSize(fontSize);
 	    
 	    /* standard position */
 		if(startPtArr.isEmpty())
 			return;
 		int index=0;
-		for(PointF spt : startPtArr)
-		{
+		for(PointF spt : startPtArr) {
 			index++;
 			pnt.setColor(Color.BLACK);
 			pnt.setStyle(Paint.Style.STROKE);
 			pnt.setStrokeWidth(1);
-			canvas.drawCircle(spt.x,spt.y, outerCircleSize, pnt);
+			canvas.drawCircle(spt.x,spt.y, standardCircleSize, pnt);
 
 			pnt.setStyle(Paint.Style.FILL);
-			canvas.drawText(String.valueOf(index),spt.x,spt.y-((int)(outerCircleSize/0.8)),pnt);
+			canvas.drawText(String.valueOf(index),spt.x,spt.y-((int)(standardCircleSize/0.8)),pnt);
 		}
 		
-		/* down event position */
-		if(!oldPtArr.isEmpty())
-		{
-			for (PointF pt : oldPtArr)
-			{
+		/* down event position */		
+		index = 0;
+		if(!oldPtArr.isEmpty())	{			
+			for (PointF pt : oldPtArr) {
 				int circleNum = checkTouchedCircle((int)pt.x, (int)pt.y);
-				pnt.setStyle(Paint.Style.STROKE);
-				canvas.drawCircle(pt.x,pt.y, innerCircleSize, pnt);
-
-				pnt.setStyle(Paint.Style.FILL);
-				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-((int)(outerCircleSize/0.8)),pnt);
-			}
-		}
+				PointF spt = startPtArr.get(circleNum-1);
+				
+				/// Start points are the center points of circles.
+				/// Images will be drawn from upper left corner.
+				float pointX = spt.x - (dotImg.getWidth()/2);
+				float pointY = spt.y - (dotImg.getHeight()/2);
+				
+				switch(motion[circleNum-1])	{				
+					case DIRECTION_DOT :		
+						canvas.drawBitmap(dotImg, pointX, pointY, pnt);
+						break;
+					case DIRECTION_UP :
+						canvas.drawBitmap(upImg, pointX, pointY, pnt);
+						break;
+					case DIRECTION_DOWN :
+						canvas.drawBitmap(downImg, pointX, pointY, pnt);
+						break;
+					case DIRECTION_LEFT :
+						canvas.drawBitmap(leftImg, pointX, pointY, pnt);
+						break;
+					case DIRECTION_RIGHT :
+						canvas.drawBitmap(rightImg, pointX, pointY, pnt);
+						break;
+					default :
+						break;
+				} // switch end
+			} // oldPtArr for-each end
+		} // if end
 		
 		/* current finger */
 		index=0;
-		if(!ptArr.isEmpty() && !plp.isEmpty() && !clp.isEmpty())
-		{			
-			for (PointF pt : ptArr)
-			{
+		if(!ptArr.isEmpty() && !plp.isEmpty() && !clp.isEmpty()) {			
+			for (PointF pt : ptArr)	{
 				int pointerId = plp.get(index++).pointerId;
 				if(pointerId >= clp.size())
 					break;					
@@ -278,9 +403,9 @@ public class MKeyboardView extends View {
 				canvas.drawCircle(pt.x,pt.y, innerCircleSize, pnt);
 
 				pnt.setStyle(Paint.Style.FILL);
-				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-((int)(outerCircleSize/0.8)),pnt);
-			}
-		}		
+				canvas.drawText(String.valueOf(circleNum),pt.x,pt.y-((int)(standardCircleSize/0.8)),pnt);
+			} // ptArr for-each end
+		} // if end
 	} // onDraw fin
 	
 	@Override
@@ -302,43 +427,37 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public boolean onTouchEvent (MotionEvent e)
-	{
+	public boolean onTouchEvent (MotionEvent e)	{
 		int action = e.getAction() & MotionEvent.ACTION_MASK;
 		
 		if(start == false)
 			return startMultiTouch(e);
-		else
-		{				
-			switch(action)
-			{
-				case MotionEvent.ACTION_DOWN :
-				{
+		else {				
+			switch(action) {
+				case MotionEvent.ACTION_DOWN : {
 					if( checkTouchedCircle((int)e.getX(), (int)e.getY()) == INVALID_CIRCLE )
 						return false;
 					for(int i=0; i<numFingers; i++) // initialize motion array
-						motion[i] = -1;
+						motion[i] = DIRECTION_EMPTY;
 					motionStartFlag = true;
 					Log.d("Motion Start", "------------------------------");
 				}
-				case MotionEvent.ACTION_POINTER_DOWN :
-				{
+				case MotionEvent.ACTION_POINTER_DOWN : {
 					int touchCount = e.getPointerCount();
 					int circleNum = checkTouchedCircle((int)e.getX(touchCount-1), (int)e.getY(touchCount-1));
-					if(touchCount>numFingers || circleNum == -1 || !motionStartFlag || !circleAvailable[circleNum-1])
-					{
+					if(touchCount>numFingers || circleNum == INVALID_CIRCLE || !motionStartFlag || !circleAvailable[circleNum-1]) {
 						invalidate();
 						return true;
-					}						
-					circleAvailable[circleNum-1] = false;
+					}
+					circleAvailable[circleNum-1] = false; // One finger in one circle.
 					motion[circleNum-1] = DIRECTION_DOT;
 					
-					PointF ptf = new PointF();
+					PointF ptf = new PointF(); // Add start position.
 					ptf.x = e.getX(touchCount-1);
 					ptf.y = e.getY(touchCount-1);
 					oldPtArr.add(ptf);
 
-					CircleLinkedWithPtId cp = new CircleLinkedWithPtId();
+					CircleLinkedWithPtId cp = new CircleLinkedWithPtId(); // Link pointerID and circle number.
 					cp.pointerId = e.getPointerId(touchCount-1);
 					cp.circleNum = circleNum;
 					clp.add(cp);
@@ -347,8 +466,7 @@ public class MKeyboardView extends View {
 					return true;
 				}
 				
-				case MotionEvent.ACTION_MOVE :
-				{
+				case MotionEvent.ACTION_MOVE : {
 					ptArr.clear();
 					plp.clear();
 					int touchCount = e.getPointerCount();
@@ -361,7 +479,7 @@ public class MKeyboardView extends View {
 						ptf.y = e.getY(i);
 						ptArr.add(ptf);
 						
-						PtIdLinkedWithPtIndex pp = new PtIdLinkedWithPtIndex();
+						PtIdLinkedWithPtIndex pp = new PtIdLinkedWithPtIndex(); // Link pointerID and pointer index.
 						pp.pointerIndex = i;
 						pp.pointerId = e.getPointerId(i);
 						plp.add(pp);
@@ -371,8 +489,7 @@ public class MKeyboardView extends View {
 					invalidate();
 					return true;
 				}
-				case MotionEvent.ACTION_POINTER_UP :
-				{
+				case MotionEvent.ACTION_POINTER_UP : {
 					motionStartFlag = false;
 					
 					int touchCount = e.getPointerCount();
@@ -380,17 +497,15 @@ public class MKeyboardView extends View {
 						touchCount = numFingers;
 					return true;
 				}
-				case MotionEvent.ACTION_UP :
-				{
-					if(!startFlag && start)
-					{
-						startFlag = true;
+				case MotionEvent.ACTION_UP : { // No point left.
+					if(!startFlag && start) { // If it is first touch to set standard position,
+						startFlag = true;	  // do nothing.
 						return true;
 					}
 					int touchCount = e.getPointerCount();
 					if(touchCount>numFingers)
 						touchCount = numFingers;
-					motionCheck();					
+					motionCheck();
 					
 					/* initialization for next motion */
 					oldPtArr.clear();
@@ -403,24 +518,18 @@ public class MKeyboardView extends View {
 					invalidate();					
 					return true;
 				}
-				case MotionEvent.ACTION_CANCEL :
-				{ // cancel all motions and  initialize
+				case MotionEvent.ACTION_CANCEL : // cancel all motions and initialize
 					oldPtArr.clear();
 					ptArr.clear();
 					clp.clear();
 					plp.clear();
 					for(int i=0; i<numFingers; i++)
 						circleAvailable[i] = true;
-					invalidate();
-					return false;
-				}
 				default :
-				{
 					invalidate();
 					return false;
-				}		
-			}
-		}
+			} // switch end
+		} // else end (for start flag)
 	} // onTouchEvent fin
 	
 	/////////////////////////////////////////////
@@ -433,11 +542,10 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public void motionCheck()
-	{
-		int checkEmpty=5;
+	public void motionCheck() {
+		int checkEmpty=numFingers;
 		for(int i=0; i<numFingers; i++)
-			checkEmpty += motion[i];
+			checkEmpty += motion[i]; // Empty motion value is -1.
 		Log.d("Motion End", "------------------------------");
 		if(checkEmpty == 0)
 			return;
@@ -449,7 +557,8 @@ public class MKeyboardView extends View {
 	/// @fn checkTouchedCircle
 	/// @brief Find touched circle
 	/// @remark
-	/// - Description : This method will check which circle is touched
+	/// - Description : This method will check which circle is touched.\n
+	/// If the distance of the touched point and the center of circle, it's in the circle.\n
 	/// @param x x grid of touched point
 	/// @param y y grid of touched point
 	/// @return Returns touched circle number. If any of circle is touched, return -1.
@@ -457,16 +566,14 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public int checkTouchedCircle(int x, int y)
-	{		
+	private int checkTouchedCircle(int x, int y) {		
 		int index=0;
-		for(PointF spt : startPtArr)
-		{
+		for(PointF spt : startPtArr) {
 			index++;
-			if( (Math.abs((int)spt.x - x) < OUTER_CIRCLE_SIZE) && (Math.abs((int)spt.y - y) < OUTER_CIRCLE_SIZE) )
+			if( (Math.abs((int)spt.x - x) < standardCircleSize) && (Math.abs((int)spt.y - y) < standardCircleSize) )
 				return index;
 		}
-		return -1;
+		return INVALID_CIRCLE;
 	} // checkTouchedCircle fin
 	
 	
@@ -482,35 +589,27 @@ public class MKeyboardView extends View {
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public boolean startMultiTouch(MotionEvent e)
-	{
+	private boolean startMultiTouch(MotionEvent e) {
 		startPtArr.clear();
-		if ( e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_MOVE )
-		{
+		if ( e.getAction() == MotionEvent.ACTION_DOWN || e.getAction() == MotionEvent.ACTION_MOVE ) {
 			int touchCount = e.getPointerCount();		
-			if(touchCount == numFingers)
-			{
+			if(touchCount == numFingers) {
 				start = true;
 				Log.d("start" , "start : " + start);
-				for (int i=0; i<touchCount; i++)
-				{
+				for (int i=0; i<touchCount; i++) {
 					PointF ptf = new PointF();
 					ptf.x = e.getX(i);
 					ptf.y = e.getY(i);
 					startPtArr.add(ptf);
 				}
-				Collections.sort(startPtArr, comparatorX);
+				Collections.sort(startPtArr, comparatorRHand);
 				/*
-				PointF pt1, pt2;
-				pt1 = startPtArr.get(0);
-				pt2 = startPtArr.get(4);
-				if(pt2.x-pt1.x < 800)
-					Collections.sort(startPtArr, comparatorY);
+				Collections.sort(startPtArr, comparatorLHand);
 				*/
 				return true;
-			}
+			} // if(touchCount == numFingers) end
 			else {return true;}
-		}
+		} // motion event if end
 		else {return false;}
 	} // startMultiTouch fin
 	
@@ -519,54 +618,57 @@ public class MKeyboardView extends View {
 	/// @fn checkDirection
 	/// @brief Check the direction of movement of pointers
 	/// @remark
-	/// - Description : Calculate the moved distances of pointers and save them in 'motion' array. 
-	/// @param pp : List of class which has Pointer ID and Pointer Index to link them.
+	/// - Description : Calculate the moved distances of pointers and save them in 'motion' array.\n
+	/// By linking up pointer index and circle number, get started position.\n
+	/// Get the distance between started position and current position.\n
+	/// And figure out which direction the current point is.
+	/// @param pp : An object which has Pointer ID and Pointer Index.
 	/// @param pt : Grid of currently moving pointer.
 	///~~~~~~~~~~~~~{.java}
 	/// // core code
 	///~~~~~~~~~~~~~
 	/////////////////////////////////////////////
-	public void checkDirection(PtIdLinkedWithPtIndex pp, PointF pt)
+	private void checkDirection(PtIdLinkedWithPtIndex pp, PointF pt)
 	{
 		CircleLinkedWithPtId cp = new CircleLinkedWithPtId();
-		for(int i=0; i<numFingers; i++)
-		{
-			if(clp.size() <= i)
-				return;
-			cp = clp.get(i);
-			if(pp.pointerId == cp.pointerId)
+		for(CircleLinkedWithPtId clpElement : clp) {   // Find cp which has same pointerID of pp.
+			if(pp.pointerId == clpElement.pointerId) { // This is for link up circle number and pointer index.
+				cp = clpElement;
 				break;
+			}
 		}
 		
 		PointF oldPt = new PointF();
-		int circleNum = -1;
-		for(int i=0; i<numFingers; i++)
-		{
-			if(oldPtArr.size() <= i)
+		int circleNum = INVALID_CIRCLE;
+		for(PointF oldPtElement : oldPtArr) { // Find the started point with circle number.
+			circleNum = checkTouchedCircle((int)oldPtElement.x, (int)oldPtElement.y);
+			if(cp.circleNum == circleNum) {
+				oldPt = oldPtElement;
 				break;
-			oldPt = oldPtArr.get(i);
-			circleNum = checkTouchedCircle((int)oldPt.x, (int)oldPt.y);
-			if(cp.circleNum == circleNum)
-				break;
+			}
 		}
-		if(circleNum == -1) return;
+		if(circleNum == INVALID_CIRCLE) return;
 		
 		float distanceX = oldPt.x - pt.x;
 		float distanceY = oldPt.y - pt.y;
 		
-		if( Math.abs(distanceX) < SWIPE_MIN_DISTANCE && Math.abs(distanceY) < SWIPE_MIN_DISTANCE )
+		if( Math.abs(distanceX) < swipeThreshold && Math.abs(distanceY) < swipeThreshold )
 			motion[circleNum-1] = DIRECTION_DOT;
-		else if( Math.abs(distanceX) > SWIPE_MIN_DISTANCE && Math.abs(distanceY) > SWIPE_MIN_DISTANCE )
-			motion[circleNum-1] = INVALID_DIRECTION;
-		else if( Math.abs(distanceX) > SWIPE_MIN_DISTANCE && distanceX > 0)
-			motion[circleNum-1] = DIRECTION_LEFT;
-		else if( Math.abs(distanceX) > SWIPE_MIN_DISTANCE && distanceX < 0)
-			motion[circleNum-1] = DIRECTION_RIGHT;
-		else if( Math.abs(distanceY) > SWIPE_MIN_DISTANCE && distanceY < 0)
-			motion[circleNum-1] = DIRECTION_DOWN;
-		else if( Math.abs(distanceY) > SWIPE_MIN_DISTANCE && distanceY > 0)
-			motion[circleNum-1] = DIRECTION_UP;
-		else
-			motion[circleNum-1] = INVALID_DIRECTION;
+		else if( Math.abs(distanceX) > swipeThreshold || Math.abs(distanceY) > swipeThreshold ) {
+			if( Math.abs(distanceY/distanceX) < 1 && Math.abs(distanceX) > swipeThreshold) {
+				// Gradient is smaller than 1.
+				if(distanceX > 0)
+					motion[circleNum-1] = DIRECTION_LEFT;
+				else
+					motion[circleNum-1] = DIRECTION_RIGHT;
+			}
+			else if( Math.abs(distanceY/distanceX) >= 1 && Math.abs(distanceY) > swipeThreshold) {
+				// Gradient is 1 or larger.
+				if(distanceY > 0)
+					motion[circleNum-1] = DIRECTION_UP;
+				else
+					motion[circleNum-1] = DIRECTION_DOWN;
+			}
+		} // direction UDLR end
 	} // checkDirection fin
 }

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['oldptarr',['oldPtArr',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#ac7da84e25f4d6414da9023da4a8d3ffa',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['outer_5fcircle_5fsize',['OUTER_CIRCLE_SIZE',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#aabab90ddcaeedf63348d892614c9d168',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['outercirclesize',['outerCircleSize',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a92db4315e015e0c892d2c324557c599c',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]]
+  ['mkeyboardview',['mKeyboardView',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#a357ffb1d95223caceb27332fecdf4d5c',1,'com::fouram::nurumikeyboard::NurumiIME::NurumiIME']]],
+  ['motion',['motion',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a33b834fb352211295449e26a9f495807',1,'com.fouram.nurumikeyboard.NurumiIME.MKeyboardView.motion()'],['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_nurumi_i_m_e.html#ac73ce0e0f969277597c8907855393ea8',1,'com.fouram.nurumikeyboard.NurumiIME.NurumiIME.motion()']]],
+  ['motionstartflag',['motionStartFlag',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a0ac7b4552f63165d0447bbe12a55b813',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]]
 ];

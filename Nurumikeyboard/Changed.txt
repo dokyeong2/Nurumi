@@ -1,5 +1,6 @@
-Gesture listening function implemented.
- - OnMKeyboardGestureListener interface added
- - connected keyboard view and IME service
- - Changed constant circle size value to variables.
- - Corrected checkTouchedCircle x range(180 -> OUTER_CIRCLE_SIZE)
+ - All pixel values changed to DP and SP values.
+ - Changed and unified all indentations.
+ - Modified inside of checkDirection() method (changed normal for loop to for-each loop)
+ - Added some comments.
+ - Size of bitmap images are changed to converted DP values.
+ - Menu Size has been changed from weight to DP value.

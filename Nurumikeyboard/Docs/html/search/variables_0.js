@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['circleavailable',['circleAvailable',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a087c107ffdad9ad25e5d28bd003a15c9',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['clp',['clp',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#adba837582df67530dd4a9d93fc1825a9',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['ctx',['ctx',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a6440facd2788dbfe89d243224cb54d88',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]]
+  ['bitmap',['bitmap',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a3d53f85ae53388c9a46280fe02fa719b',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]]
 ];

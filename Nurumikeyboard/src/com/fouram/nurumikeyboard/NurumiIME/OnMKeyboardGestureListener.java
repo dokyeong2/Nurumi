@@ -1,7 +1,5 @@
 package com.fouram.nurumikeyboard.NurumiIME;
 
-import android.inputmethodservice.InputMethodService;
-
 /////////////////////////////////////////////
 /// @class OnMKeyboardGestureListener
 ///com.fouram.nurumikeyboard.NurumiIME \n
@@ -18,8 +16,7 @@ import android.inputmethodservice.InputMethodService;
 /// When the gesture input is finished, onFinishGesture() method will be called.
 /// InputMethodService will implement this interface to get gesture input.
 /////////////////////////////////////////////
-public interface OnMKeyboardGestureListener {
-	
+public interface OnMKeyboardGestureListener {	
 	/////////////////////////////////////////////
 	/// @fn onFinishGesture
 	/// @brief Listener of gesture input 

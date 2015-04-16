@@ -1,8 +1,15 @@
 var searchData=
 [
-  ['direction_5fdot',['DIRECTION_DOT',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#ab3af4b0b8e75ae26bc33534c1736c701',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['direction_5fdown',['DIRECTION_DOWN',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a244ae46f473dfa5074d64a5af1e90ecf',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['direction_5fleft',['DIRECTION_LEFT',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#ad72ab456e489e8c3e860bfa1d094c057',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['direction_5fright',['DIRECTION_RIGHT',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a94f48baa64fed71b4f1f316958ba2a3e',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
-  ['direction_5fup',['DIRECTION_UP',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a720a8b5a9553d6b9bc0fcb94bf387eaa',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]]
+  ['checkdirection',['checkDirection',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#aa548466053ead7d81890a197df4e0665',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['checktouchedcircle',['checkTouchedCircle',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#ad7701634206a8ad8fb6ad5bc72fc39d1',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['circleavailable',['circleAvailable',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a087c107ffdad9ad25e5d28bd003a15c9',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['circlelinkedwithptid',['CircleLinkedWithPtId',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view_1_1_circle_linked_with_pt_id.html',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['clp',['clp',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#adba837582df67530dd4a9d93fc1825a9',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['com',['com',['../namespacecom.html',1,'']]],
+  ['comparatorlhand',['comparatorLHand',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a4a00c2f60203213bf194688d73767641',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['comparatorrhand',['comparatorRHand',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a5ca011c66bf25ff7bab1479e37eecf1c',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['ctx',['ctx',['../classcom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e_1_1_m_keyboard_view.html#a6440facd2788dbfe89d243224cb54d88',1,'com::fouram::nurumikeyboard::NurumiIME::MKeyboardView']]],
+  ['fouram',['fouram',['../namespacecom_1_1fouram.html',1,'com']]],
+  ['nurumiime',['NurumiIME',['../namespacecom_1_1fouram_1_1nurumikeyboard_1_1_nurumi_i_m_e.html',1,'com::fouram::nurumikeyboard']]],
+  ['nurumikeyboard',['nurumikeyboard',['../namespacecom_1_1fouram_1_1nurumikeyboard.html',1,'com::fouram']]]
 ];
